@@ -1,0 +1,91 @@
+.manage-menu-bar{
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px 0px;
+    z-index: 99;
+    position: fixed;
+}
+.manage-menu-bar .row{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.logo{
+    box-sizing: border-box;
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+.logo span{
+    margin: 0;
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: bold;
+    padding-left: 10px;
+    color: #017296;
+    flex-wrap: nowrap;
+}
+
+.logo img{
+    width: 50px;
+    height: auto;
+    box-sizing: border-box;
+}
+.box-menu-bar{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.list-menu{
+    overflow: hidden;
+    /* background-color: crimson; */
+    width: 70%;
+}
+.list-menu ul{
+    margin: 0;
+}
+.list-menu ul:nth-child(2){
+    float: right;
+}
+.list-menu ul li{
+    float: left;
+    list-style: none;
+    padding: 0 20px;
+}
+.list-menu ul li a{
+    color: #017296;
+    font-size: 15px;
+    text-decoration: none;
+}
+/* Manage Banner */
+.manage-banner{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #017296;
+}
+.manage-banner .box-banner{
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.manage-banner .box-banner .text-banner{
+    font-size: 30px;
+    color: #ffffff;
+    margin: 0
+}
+.manage-banner .box-banner .text-banner h1{
+    font-size: 50px
+}
+.manage-banner .box-banner .text-banner a{
+    color: #ffffff;
+}
+.manage-banner span{
+    font-size: 20px
+}
