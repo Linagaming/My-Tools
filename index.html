@@ -2,52 +2,205 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=e, initial-scale=1.0">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Font Awesome ---------------------------------------->
-    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
-    <!--------------------------- Style CSS ------------------>
-    <!-- Boostrap -->
-     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-     <link rel="icon" href="icon/My Tools.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register/Login | My Tools</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>My Tools</title>
+    <link rel="icon" href="icon/My Tools.png">
+    <style>
+        /* Fullscreen Auth Form */
+        #auth-form {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .auth-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            text-align: center;
+        }
+        .auth-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .auth-box button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container-fluid manage-menu-bar">
-        <div class="row">
-            <div class="box-menu-bar col-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="logo">
-                    <a href="index.html"><img src="icon/My Tools.png" alt="logo"></a>
-                    <span>MY TOOLS</span>
+    <!-- Register/Login Form -->
+    <div id="auth-form">
+        <div class="auth-box">
+            <h3 id="auth-title">Register</h3>
+            <input type="text" id="username" placeholder="Enter Username">
+            <input type="password" id="password" placeholder="Enter Password">
+            <button id="auth-button" onclick="handleAuth()">Register</button>
+            <p id="switch-text">Already have an account? <a href="#" onclick="switchToLogin()">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Logout Button -->
+    <button id="logout-btn" onclick="logout()" style="display: none;">Logout</button>
+
+    <!-- Main Website Content -->
+    <div id="main-content" style="display: none;">
+        <div class="container-fluid manage-menu-bar">
+            <div class="row">
+                <div class="box-menu-bar col-12">
+                    <div class="logo">
+                        <a href="index.html"><img src="icon/My Tools.png" alt="logo"></a>
+                        <span>MY TOOLS</span>
+                    </div>
+                    <div class="list-menu">
+                        <ul>
+                            <li><a href="#">ទំព័រដើម</a></li>
+                            <li><a href="#">អំពីយើង</a></li>
+                            <li><a href="#">ទំនាក់ទំនង</a></li>
+                            <li><a href="#">Tools ថ្មីៗ</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="#" onclick="logout()">គណនី (Logout)</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="list-menu">
-                    <ul>
-                        <li><a href="#">ទំព័រដើម</a></li>
-                        <li><a href="#">អំពីយើង</a></li>
-                        <li><a href="#">ទំនាក់ទំនង</a></li>
-                        <li><a href="#">Tools ថ្មីៗ</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="#">គណនី</a></li>
-                    </ul>
+            </div>
+        </div>
+
+        <!-- Manage Banner -->
+        <div class="container-fluid manage-banner">
+            <div class="row">
+                <div class="box-banner col-12">
+                    <div class="text-banner">
+                        <h1>MY TOOLS</h1>
+                        <a href="https://www.dropbox.com/scl/fi/v7emh51px9mq0v4rt61dk/Khmer-Downloader-Version-13.3.0.rar?rlkey=ubwpv15r0y7dzgqvpexbonbvr&st=xodasvdg&dl=1" download>
+                            <span>Khmer Downloader Version 13.3.0</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Manage Banner -->
-     <div class="container-fluid manage-banner">
-        <div class="row">
-            <div class="box-banner col-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="text-banner">
-                    <h1>MY TOOLS</h1>
-                    <a href="https://www.dropbox.com/scl/fi/v7emh51px9mq0v4rt61dk/Khmer-Downloader-Version-13.3.0.rar?rlkey=ubwpv15r0y7dzgqvpexbonbvr&st=xodasvdg&dl=0" download><span>Khmer Downloader Version 13.3.0</span></a>
-            </div>
-        </div>
-     </div>
-    
+
+    <script>
+        let isRegistering = true;
+
+        function handleAuth() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === "" || password === "") {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            if (isRegistering) {
+                // Save User Credentials
+                localStorage.setItem("username", username);
+                localStorage.setItem("password", password);
+                alert("Registration successful! Please login.");
+                switchToLogin();
+                sendTelegramMessage('New User Registered', username);
+            } else {
+                // Check Credentials
+                let savedUsername = localStorage.getItem("username");
+                let savedPassword = localStorage.getItem("password");
+
+                if (username === savedUsername && password === savedPassword) {
+                    localStorage.setItem("loggedIn", "true");
+                    sendTelegramMessage('User Logged In', username);
+                    showMainContent();
+                } else {
+                    alert("Invalid Username or Password!");
+                }
+            }
+        }
+
+        function switchToLogin() {
+            isRegistering = false;
+            document.getElementById("auth-title").textContent = "Login";
+            document.getElementById("auth-button").textContent = "Login";
+            document.getElementById("switch-text").innerHTML = 'No account? <a href="#" onclick="switchToRegister()">Register</a>';
+        }
+
+        function switchToRegister() {
+            isRegistering = true;
+            document.getElementById("auth-title").textContent = "Register";
+            document.getElementById("auth-button").textContent = "Register";
+            document.getElementById("switch-text").innerHTML = 'Already have an account? <a href="#" onclick="switchToLogin()">Login</a>';
+        }
+
+        function showMainContent() {
+            document.getElementById("auth-form").style.display = "none";
+            document.getElementById("main-content").style.display = "block";
+            document.getElementById("logout-btn").style.display = "block";
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            document.getElementById("auth-form").style.display = "flex";
+            document.getElementById("main-content").style.display = "none";
+            document.getElementById("logout-btn").style.display = "none";
+            sendTelegramMessage('User Logged Out', localStorage.getItem('username'));
+        }
+
+        function sendTelegramMessage(action, username) {
+            const botToken = "8126384085:AAFLnIlepidCpNK-fkB5DUtyRdYKH1NJPLI";
+            const chatId = "1202546286";
+            
+            // Get User IP
+            fetch("https://api64.ipify.org?format=json")
+            .then(response => response.json())
+            .then(data => {
+                const userIP = data.ip;
+                const message = `📢 ${action}!\n🧑‍💻 Username: ${username}\n🌍 IP: ${userIP}\n🔗 Website: My Tools`;
+        
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ chat_id: chatId, text: message })
+                })
+                .then(response => response.json())
+                .then(data => console.log(`${action} Telegram Alert Sent!`, data))
+                .catch(error => console.error("Telegram Error:", error));
+            })
+            .catch(error => console.error("IP Fetch Error:", error));
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem("loggedIn") === "true") {
+                showMainContent();
+            }
+        };
+
+    </script>
+
 </body>
 </html>
